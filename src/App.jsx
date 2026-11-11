@@ -5,10 +5,16 @@ import { useTheme } from './context/ThemeContext.jsx';
 export default function App() {
   const { isDark, toggleTheme } = useTheme();
   const [activeView, setActiveView] = useState('dashboard');
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div className="min-h-screen flex bg-slate-50 dark:bg-slate-950">
-      <Sidebar activeView={activeView} onNavigate={setActiveView} />
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={() => setCollapsed((prev) => !prev)}
+        activeView={activeView}
+        onNavigate={setActiveView}
+      />
       <div className="flex-1">
         <div className="h-16 border-b border-slate-200 dark:border-slate-800 flex items-center justify-end px-6">
           <button
