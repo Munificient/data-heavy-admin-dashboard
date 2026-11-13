@@ -11,6 +11,9 @@ const strokeByAccent = {
 
 export default function MetricCard({ metric }) {
   const isUp = metric.trendDirection === 'up';
+  // alerts going up is bad, not good — don't paint it green just because direction is 'up'
+  const isPositiveContext = metric.id !== 'alerts';
+  const trendIsGood = isPositiveContext ? isUp : !isUp;
 
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
@@ -20,7 +23,7 @@ export default function MetricCard({ metric }) {
       <div className="mt-4 flex items-center justify-between gap-3">
         <span
           className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold ${
-            isUp
+            trendIsGood
               ? 'bg-emerald-50 text-emerald-700'
               : 'bg-rose-50 text-rose-700'
           }`}
