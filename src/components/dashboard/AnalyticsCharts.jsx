@@ -74,9 +74,15 @@ export default function AnalyticsCharts() {
                 innerRadius={62}
                 outerRadius={88}
                 paddingAngle={3}
+                onMouseEnter={(_, index) => setActiveChannelId(acquisitionChannels[index].id)}
+                onMouseLeave={() => setActiveChannelId(null)}
               >
                 {acquisitionChannels.map((channel) => (
-                  <Cell key={channel.id} fill={channel.color} />
+                  <Cell
+                    key={channel.id}
+                    fill={channel.color}
+                    fillOpacity={activeChannelId === null || activeChannelId === channel.id ? 1 : 0.25}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -85,10 +91,18 @@ export default function AnalyticsCharts() {
         </div>
         <div className="mt-3 grid grid-cols-2 gap-2">
           {acquisitionChannels.map((channel) => (
-            <div key={channel.id} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+            <button
+              key={channel.id}
+              type="button"
+              onMouseEnter={() => setActiveChannelId(channel.id)}
+              onMouseLeave={() => setActiveChannelId(null)}
+              className={`flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300 transition-opacity duration-200 ${
+                activeChannelId !== null && activeChannelId !== channel.id ? 'opacity-40' : 'opacity-100'
+              }`}
+            >
               <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: channel.color }} />
               {channel.name}
-            </div>
+            </button>
           ))}
         </div>
       </div>
