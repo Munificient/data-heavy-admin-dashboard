@@ -115,3 +115,10 @@ export const timelineScopes = [
   { id: '30d', label: '30 Days' },
   { id: '12m', label: '12 Months' },
 ];
+
+export const acquisitionChannels = [
+  { id: 'organic', name: 'Organic', value: 4820, color: '#6366f1' },
+  { id: 'paid', name: 'Paid Ads', value: 3210, color: '#22c55e' },
+  { id: 'referral', name: 'Referral', value: 1740, color: '#f59e0b' },
+  { id: 'direct', name: 'Direct', value: 2380, color: '#ec4899' },
+];
