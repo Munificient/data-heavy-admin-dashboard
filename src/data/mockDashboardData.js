@@ -122,3 +122,51 @@ export const acquisitionChannels = [
   { id: 'referral', name: 'Referral', value: 1740, color: '#f59e0b' },
   { id: 'direct', name: 'Direct', value: 2380, color: '#ec4899' },
 ];
+
+export const orderStatuses = ['Paid', 'Pending', 'Refunded', 'Cancelled'];
+
+export const orderRecords = [
+  { id: 'ORD-10231', customer: 'Amelia Hart', email: 'amelia.hart@novamail.com', date: '2026-09-18', amount: 482.5, status: 'Paid' },
+  { id: 'ORD-10232', customer: 'Julian Cross', email: 'julian.cross@fernpost.io', date: '2026-09-18', amount: 129.0, status: 'Pending' },
+  { id: 'ORD-10233', customer: 'Priya Natarajan', email: 'priya.n@orbitmail.com', date: '2026-09-17', amount: 998.2, status: 'Paid' },
+  { id: 'ORD-10234', customer: 'Marcus Webb', email: 'marcus.webb@driftline.co', date: '2026-09-17', amount: 64.99, status: 'Cancelled' },
+  { id: 'ORD-10235', customer: 'Sofia Lindqvist', email: 'sofia.l@haloinbox.com', date: '2026-09-16', amount: 310.0, status: 'Refunded' },
+  { id: 'ORD-10236', customer: 'Daniel Osei', email: 'daniel.osei@pinemail.net', date: '2026-09-16', amount: 745.35, status: 'Paid' },
+  { id: 'ORD-10237', customer: 'Chloe Bennett', email: 'chloe.bennett@quaymail.com', date: '2026-09-15', amount: 88.4, status: 'Pending' },
+  { id: 'ORD-10238', customer: 'Rafael Moreno', email: 'rafael.moreno@cedarbox.io', date: '2026-09-15', amount: 1250.0, status: 'Paid' },
+  { id: 'ORD-10239', customer: 'Ingrid Solberg', email: 'ingrid.solberg@arcmail.com', date: '2026-09-14', amount: 215.75, status: 'Refunded' },
+  { id: 'ORD-10240', customer: 'Tobias Reinhardt', email: 'tobias.r@northinbox.de', date: '2026-09-14', amount: 59.0, status: 'Cancelled' },
+  { id: 'ORD-10241', customer: 'Naomi Chen', email: 'naomi.chen@mistmail.com', date: '2026-09-13', amount: 432.1, status: 'Paid' },
+  { id: 'ORD-10242', customer: 'Elias Fontaine', email: 'elias.fontaine@brookpost.fr', date: '2026-09-13', amount: 178.6, status: 'Pending' },
+  { id: 'ORD-10243', customer: 'Grace Okafor', email: 'grace.okafor@sunmail.ng', date: '2026-09-12', amount: 890.0, status: 'Paid' },
+  { id: 'ORD-10244', customer: 'Lucas Bergström', email: 'lucas.b@fjordinbox.se', date: '2026-09-12', amount: 46.2, status: 'Cancelled' },
+  { id: 'ORD-10245', customer: 'Isabela Duarte', email: 'isabela.duarte@palmmail.br', date: '2026-09-11', amount: 621.9, status: 'Paid' },
+  { id: 'ORD-10246', customer: 'Kwame Asante', email: 'kwame.asante@goldmail.gh', date: '2026-09-11', amount: 99.99, status: 'Pending' },
+  { id: 'ORD-10247', customer: 'Hana Kobayashi', email: 'hana.kobayashi@sakuramail.jp', date: '2026-09-10', amount: 355.4, status: 'Refunded' },
+  { id: 'ORD-10248', customer: 'Owen Fitzgerald', email: 'owen.fitz@cloverbox.ie', date: '2026-09-10', amount: 1420.0, status: 'Paid' },
+  { id: 'ORD-10249', customer: 'Mei Lin', email: 'mei.lin@jademail.com', date: '2026-09-09', amount: 76.5, status: 'Pending' },
+  { id: 'ORD-10250', customer: 'Andres Villalobos', email: 'andres.v@condorbox.mx', date: '2026-09-09', amount: 512.0, status: 'Paid' },
+  { id: 'ORD-10251', customer: 'Freya Nilsen', email: 'freya.nilsen@birchmail.no', date: '2026-09-08', amount: 233.15, status: 'Cancelled' },
+  { id: 'ORD-10252', customer: 'Samuel Achterberg', email: 'samuel.a@duneinbox.nl', date: '2026-09-08', amount: 998.75, status: 'Paid' },
+  { id: 'ORD-10253', customer: 'Layla Haddad', email: 'layla.haddad@oasismail.ae', date: '2026-09-07', amount: 145.0, status: 'Refunded' },
+  { id: 'ORD-10254', customer: 'Connor Sheehan', email: 'connor.sheehan@mossbox.ie', date: '2026-09-07', amount: 67.3, status: 'Pending' },
+];
+
+export const statusStyles = {
+  Paid: {
+    badge: 'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:ring-emerald-500/20',
+    dot: 'bg-emerald-500',
+  },
+  Pending: {
+    badge: 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:ring-amber-500/20',
+    dot: 'bg-amber-500',
+  },
+  Refunded: {
+    badge: 'bg-sky-50 text-sky-700 ring-1 ring-inset ring-sky-200 dark:bg-sky-500/10 dark:text-sky-400 dark:ring-sky-500/20',
+    dot: 'bg-sky-500',
+  },
+  Cancelled: {
+    badge: 'bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-200 dark:bg-rose-500/10 dark:text-rose-400 dark:ring-rose-500/20',
+    dot: 'bg-rose-500',
+  },
+};
