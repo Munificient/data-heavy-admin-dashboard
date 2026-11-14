@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/layout/Sidebar.jsx';
 import Header from './components/layout/Header.jsx';
 import MetricCard from './components/dashboard/MetricCard.jsx';
+import AnalyticsCharts from './components/dashboard/AnalyticsCharts.jsx';
 import { kpiMetrics } from './data/mockDashboardData.js';
 
 export default function App() {
@@ -25,6 +26,9 @@ export default function App() {
             {kpiMetrics.map((metric) => (
               <MetricCard key={metric.id} metric={metric} />
             ))}
+          </div>
+          <div className="mt-6">
+            <AnalyticsCharts />
           </div>
         </main>
       </div>

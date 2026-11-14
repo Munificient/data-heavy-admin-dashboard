@@ -76,3 +76,42 @@ export const currentUser = {
   email: 'muntasirsiam2002@gmail.com',
   initials: 'MS',
 };
+
+export const revenueTimelines = {
+  '7d': [
+    { label: 'Mon', revenue: 4200, orders: 210 },
+    { label: 'Tue', revenue: 5120, orders: 256 },
+    { label: 'Wed', revenue: 4780, orders: 238 },
+    { label: 'Thu', revenue: 6130, orders: 301 },
+    { label: 'Fri', revenue: 7240, orders: 342 },
+    { label: 'Sat', revenue: 6890, orders: 318 },
+    { label: 'Sun', revenue: 5990, orders: 275 },
+  ],
+  '30d': [
+    { label: 'W1', revenue: 32100, orders: 1520 },
+    { label: 'W2', revenue: 35800, orders: 1680 },
+    { label: 'W3', revenue: 31200, orders: 1440 },
+    { label: 'W4', revenue: 41250, orders: 1910 },
+    { label: 'W5', revenue: 38900, orders: 1785 },
+  ],
+  '12m': [
+    { label: 'Jan', revenue: 142000, orders: 6200 },
+    { label: 'Feb', revenue: 138500, orders: 6050 },
+    { label: 'Mar', revenue: 156200, orders: 6820 },
+    { label: 'Apr', revenue: 149800, orders: 6510 },
+    { label: 'May', revenue: 167300, orders: 7240 },
+    { label: 'Jun', revenue: 172900, orders: 7480 },
+    { label: 'Jul', revenue: 181400, orders: 7820 },
+    { label: 'Aug', revenue: 176600, orders: 7610 },
+    { label: 'Sep', revenue: 192300, orders: 8240 },
+    { label: 'Oct', revenue: 205100, orders: 8790 },
+    { label: 'Nov', revenue: 221800, orders: 9420 },
+    { label: 'Dec', revenue: 248254, orders: 10380 },
+  ],
+};
+
+export const timelineScopes = [
+  { id: '7d', label: '7 Days' },
+  { id: '30d', label: '30 Days' },
+  { id: '12m', label: '12 Months' },
+];
