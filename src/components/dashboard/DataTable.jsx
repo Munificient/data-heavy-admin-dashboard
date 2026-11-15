@@ -53,8 +53,14 @@ export default function DataTable({ searchTerm = '' }) {
   }, [statusTab, searchTerm, sortConfig]);
 
   const totalPages = Math.max(1, Math.ceil(filteredRecords.length / PAGE_SIZE));
-  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const safePage = Math.min(currentPage, totalPages);
+  const pageStart = (safePage - 1) * PAGE_SIZE;
   const pageRows = filteredRecords.slice(pageStart, pageStart + PAGE_SIZE);
+
+  const changeTab = (tab) => {
+    setStatusTab(tab);
+    setCurrentPage(1);
+  };
 
   const handleSort = (key) => {
     setSortConfig((prev) =>
@@ -79,7 +85,7 @@ export default function DataTable({ searchTerm = '' }) {
             <button
               key={tab}
               type="button"
-              onClick={() => setStatusTab(tab)}
+              onClick={() => changeTab(tab)}
               className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 ${
                 statusTab === tab ? 'bg-white dark:bg-slate-900 text-brand-700 shadow-sm' : 'text-slate-500'
               }`}
@@ -127,14 +133,16 @@ export default function DataTable({ searchTerm = '' }) {
         <div className="flex items-center gap-2">
           <button
             type="button"
+            disabled={safePage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
             className="flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600"
           >
             <ChevronLeft size={13} /> Previous
           </button>
-          <span className="px-2 text-xs text-slate-500">Page {currentPage} of {totalPages}</span>
+          <span className="px-2 text-xs text-slate-500">Page {safePage} of {totalPages}</span>
           <button
             type="button"
+            disabled={safePage === totalPages}
             onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
             className="flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600"
           >
