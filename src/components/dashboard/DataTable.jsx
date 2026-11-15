@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { orderRecords, orderStatuses, statusStyles } from '../../data/mockDashboardData.js';
 
 const STATUS_TABS = ['All', ...orderStatuses];
@@ -17,12 +18,18 @@ function StatusBadge({ status }) {
   );
 }
 
+function SortIcon({ active, direction }) {
+  if (!active) return <ArrowUpDown size={13} className="text-slate-300" />;
+  return direction === 'asc' ? <ArrowUp size={13} className="text-brand-600" /> : <ArrowDown size={13} className="text-brand-600" />;
+}
+
 export default function DataTable({ searchTerm = '' }) {
   const [statusTab, setStatusTab] = useState('All');
+  const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
 
   const filteredRecords = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
-    return orderRecords.filter((row) => {
+    let rows = orderRecords.filter((row) => {
       const matchesStatus = statusTab === 'All' || row.status === statusTab;
       const matchesSearch =
         term.length === 0 ||
@@ -30,7 +37,32 @@ export default function DataTable({ searchTerm = '' }) {
         row.id.toLowerCase().includes(term);
       return matchesStatus && matchesSearch;
     });
-  }, [statusTab, searchTerm]);
+
+    rows = [...rows].sort((a, b) => {
+      const { key, direction } = sortConfig;
+      let comparison = 0;
+      if (key === 'amount') comparison = a.amount - b.amount;
+      else if (key === 'date') comparison = new Date(a.date) - new Date(b.date);
+      else comparison = a.customer.localeCompare(b.customer);
+      return direction === 'asc' ? comparison : -comparison;
+    });
+
+    return rows;
+  }, [statusTab, searchTerm, sortConfig]);
+
+  const handleSort = (key) => {
+    setSortConfig((prev) =>
+      prev.key === key ? { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' } : { key, direction: 'asc' }
+    );
+  };
+
+  const columns = [
+    { key: 'id', label: 'Order ID', sortable: false },
+    { key: 'customer', label: 'Customer Name', sortable: true },
+    { key: 'date', label: 'Purchase Date', sortable: true },
+    { key: 'amount', label: 'Amount', sortable: true },
+    { key: 'status', label: 'Status', sortable: false },
+  ];
 
   return (
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
@@ -55,11 +87,18 @@ export default function DataTable({ searchTerm = '' }) {
       <table className="w-full text-left">
         <thead>
           <tr className="border-b border-slate-100 dark:border-slate-800">
-            <th className="px-5 py-3 text-xs font-semibold uppercase text-slate-400">Order ID</th>
-            <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-400">Customer Name</th>
-            <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-400">Purchase Date</th>
-            <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-400">Amount</th>
-            <th className="px-3 py-3 text-xs font-semibold uppercase text-slate-400">Status</th>
+            {columns.map((col) => (
+              <th key={col.key} className="px-3 py-3 text-xs font-semibold uppercase text-slate-400 first:px-5">
+                {col.sortable ? (
+                  <button type="button" onClick={() => handleSort(col.key)} className="flex items-center gap-1.5">
+                    {col.label}
+                    <SortIcon active={sortConfig.key === col.key} direction={sortConfig.direction} />
+                  </button>
+                ) : (
+                  col.label
+                )}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
