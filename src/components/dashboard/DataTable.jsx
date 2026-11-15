@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowUpDown, ArrowUp, ArrowDown, ChevronLeft, ChevronRight, Trash2, CheckCircle2, X } from 'lucide-react';
+import { ArrowUpDown, ArrowUp, ArrowDown, ChevronLeft, ChevronRight, Trash2, CheckCircle2, X, Download } from 'lucide-react';
 import { orderRecords, orderStatuses, statusStyles } from '../../data/mockDashboardData.js';
 
 const PAGE_SIZE = 8;
@@ -7,6 +7,22 @@ const STATUS_TABS = ['All', ...orderStatuses];
 
 function currency(value) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+}
+
+function downloadCsv(rows) {
+  const header = ['Order ID', 'Customer Name', 'Email', 'Purchase Date', 'Amount', 'Status'];
+  const escapeCell = (value) => `"${String(value).replace(/"/g, '""')}"`;
+  const lines = rows.map((row) =>
+    [row.id, row.customer, row.email, row.date, row.amount.toFixed(2), row.status].map(escapeCell).join(',')
+  );
+  const csvContent = [header.join(','), ...lines].join('\n');
+  const encodedUri = `data:text/csv;charset=utf-8,${encodeURIComponent(csvContent)}`;
+  const link = document.createElement('a');
+  link.setAttribute('href', encodedUri);
+  link.setAttribute('download', `orders-export-${Date.now()}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 function StatusBadge({ status }) {
@@ -106,6 +122,7 @@ export default function DataTable({ searchTerm = '' }) {
     <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
       <div className="flex items-center justify-between p-5 border-b border-slate-100 dark:border-slate-800">
         <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Orders</h3>
+        <div className="flex items-center gap-3">
         <div className="flex items-center gap-1 rounded-lg bg-slate-100 dark:bg-slate-800 p-1">
           {STATUS_TABS.map((tab) => (
             <button
@@ -119,6 +136,14 @@ export default function DataTable({ searchTerm = '' }) {
               {tab}
             </button>
           ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => downloadCsv(filteredRecords)}
+          className="flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300"
+        >
+          <Download size={13} /> Export CSV
+        </button>
         </div>
       </div>
 
