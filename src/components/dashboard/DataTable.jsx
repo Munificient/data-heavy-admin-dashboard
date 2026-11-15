@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import { ArrowUpDown, ArrowUp, ArrowDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { orderRecords, orderStatuses, statusStyles } from '../../data/mockDashboardData.js';
 
+const PAGE_SIZE = 8;
 const STATUS_TABS = ['All', ...orderStatuses];
 
 function currency(value) {
@@ -26,6 +27,7 @@ function SortIcon({ active, direction }) {
 export default function DataTable({ searchTerm = '' }) {
   const [statusTab, setStatusTab] = useState('All');
   const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredRecords = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
@@ -49,6 +51,10 @@ export default function DataTable({ searchTerm = '' }) {
 
     return rows;
   }, [statusTab, searchTerm, sortConfig]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredRecords.length / PAGE_SIZE));
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const pageRows = filteredRecords.slice(pageStart, pageStart + PAGE_SIZE);
 
   const handleSort = (key) => {
     setSortConfig((prev) =>
@@ -102,7 +108,7 @@ export default function DataTable({ searchTerm = '' }) {
           </tr>
         </thead>
         <tbody>
-          {filteredRecords.map((row) => (
+          {pageRows.map((row) => (
             <tr key={row.id} className="border-b border-slate-50 dark:border-slate-800/60 text-sm">
               <td className="px-5 py-3.5 font-mono text-xs text-slate-500">{row.id}</td>
               <td className="px-3 py-3.5 text-slate-800 dark:text-slate-100">{row.customer}</td>
@@ -113,6 +119,29 @@ export default function DataTable({ searchTerm = '' }) {
           ))}
         </tbody>
       </table>
+
+      <div className="flex items-center justify-between px-5 py-4 border-t border-slate-100 dark:border-slate-800">
+        <p className="text-xs text-slate-500">
+          Showing {pageStart + 1} to {Math.min(pageStart + PAGE_SIZE, filteredRecords.length)} of {filteredRecords.length} entries
+        </p>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+            className="flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600"
+          >
+            <ChevronLeft size={13} /> Previous
+          </button>
+          <span className="px-2 text-xs text-slate-500">Page {currentPage} of {totalPages}</span>
+          <button
+            type="button"
+            onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+            className="flex items-center gap-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600"
+          >
+            Next <ChevronRight size={13} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
